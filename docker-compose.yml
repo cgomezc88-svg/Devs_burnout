@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  python-app:
+    build: .
+    volumes:
+      - .:/app # Bind-mount para que edites tu código en windows y se vea en Docker
+    environment:
+      - MONGO_USER=${MONGO_USER}
+      - MONGO_PASSWORD=${MONGO_PASS}
+    command: tail -f /dev/null # Mantiene el contenedor corriendo para desarrollo
+    depends_on:
+      - db-mongo
+
+  db-mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASS}
+    volumes:
+      - Devs_Burnout_data:/data/db # Volumen NOMBRADO para persistencia de datos
+
+volumes:
+  Devs_Burnout_data:
