@@ -6,3 +6,4 @@ pymongo
 scipy
 statsmodels
 ipykernel
+scikit-learn
